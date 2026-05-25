@@ -12,6 +12,49 @@ const phases: Array<{ id: CheckInPhase; label: string; icon: ReactNode }> = [
   { id: "end_of_day", label: "End day", icon: <Moon size={17} aria-hidden /> }
 ];
 
+const obstacleOptions = [
+  "Lack of time",
+  "Interruptions",
+  "Unclear priority",
+  "Waiting on someone",
+  "Too many meetings",
+  "Lack of information",
+  "Team resistance",
+  "Firefighting",
+  "Personal discipline",
+  "Other"
+];
+
+const leadershipBehaviorOptions = [
+  "Clarity",
+  "Accountability",
+  "Follow-through",
+  "Delegation",
+  "Listening",
+  "Coaching",
+  "Decisiveness",
+  "Prioritization",
+  "Communication",
+  "Respect for people",
+  "Other"
+];
+const middayStatusOptions = [
+  "On track",
+  "Slightly off track",
+  "Blocked",
+  "Need decision",
+  "Need support"
+];
+
+const recoveryActionOptions = [
+  "Reprioritize",
+  "Delegate",
+  "Escalate",
+  "Clarify ownership",
+  "Protect focus time",
+  "Remove low-value work",
+  "Schedule follow-up"
+];
 export function CheckInForm() {
   const router = useRouter();
   const [phase, setPhase] = useState<CheckInPhase>("morning");
@@ -29,8 +72,12 @@ export function CheckInForm() {
       phase,
       topPriorities: [values.priority1, values.priority2, values.priority3].filter(Boolean),
       obstacle: values.obstacle,
+      obstacleCategory: values.obstacleCategory,
       leadershipBehavior: values.leadershipBehavior,
       progress: values.progress,
+      leadershipBehaviorCategory: values.leadershipBehaviorCategory,
+      middayStatus: values.middayStatus,
+      recoveryAction: values.recoveryAction,
       blocked: values.blocked,
       supportNeeded: values.supportNeeded,
       completed: values.completed,
@@ -103,18 +150,55 @@ export function CheckInForm() {
                 />
               </div>
             ))}
-            <TextArea
-              id="obstacle"
-              label="What obstacle could get in the way?"
-              value={values.obstacle}
-              onChange={update}
-            />
-            <TextArea
-              id="leadershipBehavior"
-              label="What leadership behavior do you want to demonstrate today?"
-              value={values.leadershipBehavior}
-              onChange={update}
-            />
+<div className="field">
+  <label htmlFor="obstacleCategory">
+    What obstacle could get in the way?
+  </label>
+
+  <select
+    className="input cursor-pointer"
+    style={{ appearance: "auto" }}
+    id="obstacleCategory"
+    value={values.obstacleCategory || ""}
+    onChange={(event) =>
+      update("obstacleCategory", event.target.value)
+    }
+    required
+  >
+    <option value="">Select an obstacle</option>
+
+    {obstacleOptions.map((option) => (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    ))}
+  </select>
+</div>
+
+<div className="field">
+  <label htmlFor="leadershipBehaviorCategory">
+    What leadership behavior do you want to demonstrate today?
+  </label>
+
+  <select
+    className="input cursor-pointer"
+    style={{ appearance: "auto" }}
+    id="leadershipBehaviorCategory"
+    value={values.leadershipBehaviorCategory || ""}
+    onChange={(event) =>
+      update("leadershipBehaviorCategory", event.target.value)
+    }
+    required
+  >
+    <option value="">Select a behavior</option>
+
+    {leadershipBehaviorOptions.map((option) => (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    ))}
+  </select>
+</div>
           </>
         ) : null}
 
@@ -133,6 +217,53 @@ export function CheckInForm() {
               value={values.supportNeeded}
               onChange={update}
             />
+            <div className="field">
+  <label htmlFor="middayStatus">
+    What is your current execution status?
+  </label>
+
+  <select
+    className="input cursor-pointer"
+    style={{ appearance: "auto" }}
+    id="middayStatus"
+    value={values.middayStatus || ""}
+    onChange={(event) =>
+      update("middayStatus", event.target.value)
+    }
+  >
+    <option value="">Select status</option>
+
+    {middayStatusOptions.map((option) => (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    ))}
+  </select>
+</div>
+
+<div className="field">
+  <label htmlFor="recoveryAction">
+    What action will help get execution back on track?
+  </label>
+
+  <select
+    className="input cursor-pointer"
+    style={{ appearance: "auto" }}
+    id="recoveryAction"
+    value={values.recoveryAction || ""}
+    onChange={(event) =>
+      update("recoveryAction", event.target.value)
+    }
+  >
+    <option value="">Select recovery action</option>
+
+    {recoveryActionOptions.map((option) => (
+      <option key={option} value={option}>
+        {option}
+      </option>
+    ))}
+  </select>
+</div>
           </>
         ) : null}
 
@@ -164,6 +295,7 @@ export function CheckInForm() {
 function TextArea({
   id,
   label,
+
   value,
   onChange
 }: {

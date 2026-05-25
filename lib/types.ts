@@ -8,6 +8,10 @@ export type CheckIn = {
   top_priorities: string[];
   obstacle: string | null;
   leadership_behavior: string | null;
+  obstacle_category: string | null;
+  leadership_behavior_category: string | null;
+  midday_status: string | null;
+  recovery_action: string | null;
   progress: string | null;
   blocked: string | null;
   support_needed: string | null;
@@ -57,4 +61,6 @@ export type CheckInPayload = {
   notDone?: string;
   lesson?: string;
   nextAction?: string;
+  obstacleCategory?: string;
+leadershipBehaviorCategory?: string;
 };

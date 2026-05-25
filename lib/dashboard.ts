@@ -79,16 +79,14 @@ export function getExecutionScore(checkIns: CheckIn[]) {
   return Math.max(0, Math.min(100, score));
 }
 
-export function getWeeklyReflectionSummary(checkIns: CheckIn[]) {
-  const lessons = checkIns
+  export function getWeeklyReflectionSummary(checkIns: CheckIn[] = []) {
+  const safeCheckIns = checkIns ?? [];
+
+  const lessons = safeCheckIns
     .filter((item) => item.phase === "end_of_day")
     .map((item) => item.lesson)
     .filter((value): value is string => Boolean(value && value.trim().length > 0))
     .slice(0, 5);
-
-  if (lessons.length === 0) {
-    return "No weekly reflection themes yet. Complete end-of-day reflections to build the summary.";
-  }
 
   return lessons.join(" ");
 }

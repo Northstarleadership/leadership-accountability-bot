@@ -4,8 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Sparkles } from "lucide-react";
 import type { WeeklySummary } from "@/lib/types";
+type WeeklySummaryCardProps = {
+  summary: WeeklySummary | null;
+  aiSummary?: string;
+};
 
-export function WeeklySummaryCard({ summary }: { summary: WeeklySummary | null }) {
+export function WeeklySummaryCard({summary,aiSummary
+}: WeeklySummaryCardProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -48,6 +53,14 @@ export function WeeklySummaryCard({ summary }: { summary: WeeklySummary | null }
             Week of {summary.week_start} through {summary.week_end}. Score: {summary.execution_score}
           </p>
           <div className="coach-box">{summary.summary}</div>
+         {aiSummary && (
+  <div className="coach-box" style={{ marginTop: "1rem" }}>
+    <p className="eyebrow">AI Weekly Insight</p>
+    <div className="muted whitespace-pre-wrap">
+      {aiSummary}
+    </div>
+  </div>
+)}
         </>
       ) : (
         <p className="muted">Generate a weekly summary once you have check-ins for the week.</p>

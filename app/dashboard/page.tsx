@@ -12,6 +12,13 @@ import { ExecutionScore } from "@/components/execution-score";
 import { WeeklySummaryCard } from "@/components/weekly-summary-card";
 import { createWeeklySummaryResponse } from "@/lib/openai";
 import { ReminderSettings } from "@/components/reminder-settings";
+import { ObstacleAnalytics } from "@/components/obstacle-analytics";
+import { LeadershipBehaviorAnalytics } from "@/components/leadership-behavior-analytics";
+import { MorningAlignmentInsight } from "@/components/morning-alignment-insight";
+import { MiddayRecoveryCoaching } from "@/components/midday-recovery-coaching";
+import { DailyAarReport } from "@/components/daily-aar-report";
+import { DailyLeadershipNarrative } from "@/components/daily-leadership-narrative";
+import { WeeklyLeadershipIntelligence } from "@/components/weekly-leadership-intelligence";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -44,11 +51,13 @@ export default async function DashboardPage() {
     .order("week_start", { ascending: false })
     .limit(1)
     .maybeSingle();
+  
 
   const checkIns = (data || []) as CheckIn[];
   const profile = profileData as UserProfile | null;
-  const weeklySummary = summaryData as WeeklySummary | null;
-
+  const weeklySummary = summaryData as WeeklySummary | null; 
+  const aiWeeklySummary = await createWeeklySummaryResponse(checkIns);
+  
   return (
     <main className="app-shell">
       <header className="topbar">
@@ -76,15 +85,24 @@ export default async function DashboardPage() {
 
         <div className="page-grid">
           <div>
-            <CheckInForm />
+            <div className="space-y-6">
+          <CheckInForm />
+        <ObstacleAnalytics checkIns={checkIns} />
+        <LeadershipBehaviorAnalytics checkIns={checkIns} />
+        <MorningAlignmentInsight checkIns={checkIns} />
+        <MiddayRecoveryCoaching checkIns={checkIns} />
+        <DailyAarReport checkIns={checkIns} />
+        <DailyLeadershipNarrative checkIns={checkIns} />
+            </div>
           </div>
           <aside>
             <ExecutionScore checkIns={checkIns} />
             <CommitmentList checkIns={checkIns} />
             <BlockerList checkIns={checkIns} />
-            <ReflectionSummary checkIns={checkIns} />
-            <WeeklySummaryCard summary={weeklySummary} />
-            <ReminderSettings profile={profile} fallbackEmail={user.email} />
+            <ReflectionSummary weeklySummary={weeklySummary} />
+            <WeeklyLeadershipIntelligence checkIns={checkIns} />
+
+<ReminderSettings profile={profile} fallbackEmail={user.email} />
           </aside>
         </div>
       </div>
