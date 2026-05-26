@@ -1,7 +1,12 @@
 import { redirect } from "next/navigation";
 import { Bot, LogOut } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import type {CheckIn, UserProfile, WeeklySummary, LeaderStandardWork} from "@/lib/types";
+import type {
+  CheckIn,
+  UserProfile,
+  WeeklySummary,
+  LeaderStandardWork as LeaderStandardWorkType
+} from "@/lib/types";
 import { CheckInForm } from "@/components/check-in-form";
 import { DashboardStats } from "@/components/dashboard-stats";
 import { CommitmentList } from "@/components/commitment-list";
@@ -64,7 +69,7 @@ export default async function DashboardPage() {
   const checkIns = (data || []) as CheckIn[];
   const profile = profileData as UserProfile | null;
   const weeklySummary = summaryData as WeeklySummary | null; 
-  const leaderStandardWork = (lswData || []) as LeaderStandardWork[];
+  const leaderStandardWork = (lswData || []) as LeaderStandardWorkType[];
   const aiWeeklySummary = await createWeeklySummaryResponse(checkIns);
   
   return (
