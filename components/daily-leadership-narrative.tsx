@@ -92,7 +92,7 @@ This pattern suggests leadership growth is occurring through awareness, adjustme
         Daily Leadership Narrative
       </h2>
 
-      <p className="mt-1 text-sm text-gray-500">
+      <p style={{ fontWeight: 800, color: "#111827", fontSize: "16px" }}>
         AI-generated interpretation of your leadership execution patterns throughout the day.
       </p>
 

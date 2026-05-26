@@ -1,10 +1,10 @@
 "use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { Clock3, Moon, Send, Sun } from "lucide-react";
 import type { CheckInPayload, CheckInPhase } from "@/lib/types";
+
 
 const phases: Array<{ id: CheckInPhase; label: string; icon: ReactNode }> = [
   { id: "morning", label: "Morning", icon: <Sun size={17} aria-hidden /> },
@@ -56,12 +56,47 @@ const recoveryActionOptions = [
   "Schedule follow-up"
 ];
 export function CheckInForm() {
+  const todayDisplay = new Date().toLocaleDateString("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  year: "numeric"
+});
   const router = useRouter();
   const [phase, setPhase] = useState<CheckInPhase>("morning");
   const [values, setValues] = useState<Record<string, string>>({});
   const [aiCoaching, setAiCoaching] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+    function handleAddPriority(event: Event) {
+    const customEvent = event as CustomEvent<string>;
+    const activity = customEvent.detail;
+
+    setValues((current) => {
+      if (!current.priority1) {
+        return { ...current, priority1: activity };
+      }
+
+      if (!current.priority2) {
+        return { ...current, priority2: activity };
+      }
+
+      if (!current.priority3) {
+        return { ...current, priority3: activity };
+      }
+
+      return current;
+    });
+  }
+
+  window.addEventListener("add-lsw-priority", handleAddPriority);
+
+  return () => {
+    window.removeEventListener("add-lsw-priority", handleAddPriority);
+  };
+}, []);
 
   function update(name: string, value: string) {
     setValues((current) => ({ ...current, [name]: value }));
@@ -118,6 +153,7 @@ export function CheckInForm() {
         <div>
           <p className="eyebrow">Check in</p>
           <h2>Capture the leadership moment</h2>
+          <p className="muted">{todayDisplay}</p>
         </div>
       </div>
 

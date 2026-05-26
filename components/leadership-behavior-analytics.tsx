@@ -88,7 +88,7 @@ export function LeadershipBehaviorAnalytics({
       </div>
 
       <div className="mt-6 rounded-lg border p-4">
-        <p className="text-sm text-gray-500">Leadership Coaching Insight</p>
+        <p style={{ fontWeight: 800, color: "#111827", fontSize: "16px" }}>Leadership Coaching Insight</p>
 
         <p className="mt-2 text-sm leading-6">
           {topBehavior === "Accountability" &&

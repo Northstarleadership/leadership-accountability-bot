@@ -19,6 +19,14 @@ import { MiddayRecoveryCoaching } from "@/components/midday-recovery-coaching";
 import { DailyAarReport } from "@/components/daily-aar-report";
 import { DailyLeadershipNarrative } from "@/components/daily-leadership-narrative";
 import { WeeklyLeadershipIntelligence } from "@/components/weekly-leadership-intelligence";
+import { LeaderStandardWork } from "@/components/leader-standard-work";
+
+import type {
+  CheckIn,
+  UserProfile,
+  WeeklySummary,
+  LeaderStandardWork
+} from "@/lib/types";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -51,11 +59,18 @@ export default async function DashboardPage() {
     .order("week_start", { ascending: false })
     .limit(1)
     .maybeSingle();
+
+    const { data: lswData } = await supabase
+  .from("leader_standard_work")
+  .select("*")
+  .eq("user_id", user.id)
+  .order("created_at", { ascending: false });
   
 
   const checkIns = (data || []) as CheckIn[];
   const profile = profileData as UserProfile | null;
   const weeklySummary = summaryData as WeeklySummary | null; 
+  const leaderStandardWork = (lswData || []) as LeaderStandardWork[];
   const aiWeeklySummary = await createWeeklySummaryResponse(checkIns);
   
   return (
@@ -65,7 +80,7 @@ export default async function DashboardPage() {
           <span className="brand-mark">
             <Bot size={20} aria-hidden />
           </span>
-          <span>Leadership Accountability Bot</span>
+          <span>Leadership Accountability App</span>
         </div>
         <SignOutButton icon={<LogOut size={18} aria-hidden />} />
       </header>
@@ -87,20 +102,20 @@ export default async function DashboardPage() {
           <div>
             <div className="space-y-6">
           <CheckInForm />
+        <LeaderStandardWork items={leaderStandardWork} />
         <ObstacleAnalytics checkIns={checkIns} />
         <LeadershipBehaviorAnalytics checkIns={checkIns} />
         <MorningAlignmentInsight checkIns={checkIns} />
         <MiddayRecoveryCoaching checkIns={checkIns} />
-        <DailyAarReport checkIns={checkIns} />
         <DailyLeadershipNarrative checkIns={checkIns} />
             </div>
           </div>
           <aside>
             <ExecutionScore checkIns={checkIns} />
             <CommitmentList checkIns={checkIns} />
-            <BlockerList checkIns={checkIns} />
-            <ReflectionSummary weeklySummary={weeklySummary} />
+            <ReflectionSummary checkIns={checkIns} />
             <WeeklyLeadershipIntelligence checkIns={checkIns} />
+            <DailyAarReport checkIns={checkIns} />
 
 <ReminderSettings profile={profile} fallbackEmail={user.email} />
           </aside>

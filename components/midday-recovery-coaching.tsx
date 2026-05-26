@@ -103,28 +103,54 @@ export function MiddayRecoveryCoaching({
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="rounded-lg border p-4">
-          <p className="text-sm text-gray-500">Current Status</p>
+          <p style={{ fontWeight: 800, color: "#111827", fontSize: "16px" }}>Current Status</p>
           <p className="mt-1 text-lg font-semibold">
             {status || "No status selected"}
           </p>
         </div>
 
-        <div className="rounded-lg border p-4">
-          <p className="text-sm text-gray-500">Recovery Action</p>
-          <p className="mt-1 text-lg font-semibold">
-            {recoveryAction || "No recovery action selected"}
-          </p>
-        </div>
       </div>
 
-      <div className="mt-6 rounded-lg border p-4">
-       <p style={{ fontWeight: 800, color: "#111827", fontSize: "16px" }}>Recovery Coaching</p>
+      <div
+         className="mt-6 max-w-4xl rounded-lg border p-5"
+        style={{
+        backgroundColor: "#f8fffe",
+         borderColor: "#99f6e4"
+        }}
+        >
+       <p
+        className="mb-5"
+        style={{
+        fontWeight: 700,
+        color: "#111827",
+        fontSize: "16px"
+        }}
+        >
+        Recovery Coaching
+        </p>
+        <div className="mt-3 rounded-lg border border-gray-200 bg-gray-50 p-4 shadow-sm">
+        <p style={{ fontWeight: 700, color: "#111827", fontSize: "15px" }}>
+        Recovery Action
+        </p>
 
-        <p className="mt-2 text-sm leading-6">{coaching}</p>
+        <p className="mt-3 mb-4 text-sm leading-6">
+        {recoveryAction || "No recovery action selected"}
+        </p>
+        </div>
 
-        <p style={{ fontWeight: 800, color: "#111827", fontSize: "16px" }}>{actionCoaching}</p>
+        <p className="mt-3 text-sm leading-6">{coaching}</p>
 
-        <div className="mt-4">
+        <p className="mt-3 text-sm leading-6">
+            {actionCoaching}
+                </p>
+
+        <div
+        className="mt-6 rounded-lg border p-5"
+        style={{
+        backgroundColor: "#ecfeff",
+        borderColor: "#f5fbff"
+        }}
+        >
           <p style={{ fontWeight: 800, color: "#111827", fontSize: "16px" }}>Recovery Prompts</p>
 
           <ul className="mt-2 list-disc space-y-2 pl-5 text-sm text-gray-700">

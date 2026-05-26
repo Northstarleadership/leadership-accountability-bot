@@ -48,10 +48,21 @@ export type WeeklySummary = {
   summary: string;
   created_at: string;
 };
+export type LeaderStandardWork = {
+  id: string;
+  user_id: string;
+  activity: string;
+  frequency: string;
+  category: string | null;
+  notes: string | null;
+  created_at: string;
+};
 
 export type CheckInPayload = {
   phase: CheckInPhase;
   topPriorities?: string[];
+  middayStatus?: string;
+  recoveryAction?: string;
   obstacle?: string;
   leadershipBehavior?: string;
   progress?: string;
@@ -62,5 +73,5 @@ export type CheckInPayload = {
   lesson?: string;
   nextAction?: string;
   obstacleCategory?: string;
-leadershipBehaviorCategory?: string;
+  leadershipBehaviorCategory?: string;
 };
