@@ -135,9 +135,11 @@ export function LeaderStandardWork({ items }: LeaderStandardWorkProps) {
                 Add to Today
               </button>
 
-              <p className="font-semibold">
-                {item.activity}{" "}
-                <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
+            <span className="font-semibold">
+              {item.activity}
+            </span>
+            </div>
   <span
     className={`rounded-full px-2 py-1 text-xs font-semibold ${
       item.frequency === "Daily"
@@ -153,13 +155,13 @@ export function LeaderStandardWork({ items }: LeaderStandardWorkProps) {
   <span className="rounded-full bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-700">
     {item.category}
   </span>
-</div>
+
                 {item.notes ? (
+             
                   <span className="font-normal text-sm text-gray-600">
                     {" "}• {item.notes}
                   </span>
                 ) : null}
-              </p>
             </div>
           ))
         )}

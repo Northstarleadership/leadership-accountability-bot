@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { Bot, LogOut } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import type { CheckIn, UserProfile, WeeklySummary } from "@/lib/types";
+import type {CheckIn, UserProfile, WeeklySummary, LeaderStandardWork} from "@/lib/types";
 import { CheckInForm } from "@/components/check-in-form";
 import { DashboardStats } from "@/components/dashboard-stats";
 import { CommitmentList } from "@/components/commitment-list";
@@ -21,12 +21,6 @@ import { DailyLeadershipNarrative } from "@/components/daily-leadership-narrativ
 import { WeeklyLeadershipIntelligence } from "@/components/weekly-leadership-intelligence";
 import { LeaderStandardWork } from "@/components/leader-standard-work";
 
-import type {
-  CheckIn,
-  UserProfile,
-  WeeklySummary,
-  LeaderStandardWork
-} from "@/lib/types";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
